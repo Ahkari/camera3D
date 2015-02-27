@@ -1,0 +1,891 @@
+<!DOCTYPE html> 
+
+<html> 
+
+<head> 
+
+<meta lang="en" /> 
+
+<meta charset="utf-8"> 
+
+<title>wordFly_IU</title> 
+
+<style> 
+
+*{
+
+padding: 0px;
+
+margin: 0px;
+
+}
+
+#allWrap{
+
+width: 800px;
+
+background-color: #dd7;
+
+height: 580px;
+
+margin: 0px auto;
+
+
+}
+
+#wrap{ 
+
+width: 800px; 
+
+/*需设定为相对定位，不然内部元素不好定位*/
+
+overflow: hidden;
+
+position: relative;
+
+background-color: #111; 
+
+height: 400px; 
+
+/*margin: 0px auto;*/
+
+color:#eee;
+
+} 
+
+/*可以在这里设置元素的初始位置。*/
+
+/*和摄像机运动无关。也和摄像机视角下的初始位置无关*/
+
+/*#a{ 
+
+position: absolute;
+
+background-color: #a083d0; 
+
+width: 30px; 
+
+height: 200px;
+
+top:100px;
+
+left:300px;
+
+opacity: 0.5;
+
+}*/
+
+#a{
+
+font-size: 2.4em;
+
+} 
+
+#b{
+
+font-size: 1em;
+
+}
+
+#c{
+
+font-size: 1.5em;
+
+}
+
+#d{
+
+font-size: 1.8em;
+
+}
+
+#e{
+
+font-size: 2em;
+
+}
+
+#f{
+
+font-size: 1.7em;
+
+}
+
+#g{
+
+font-size: 2.1em;
+
+}
+
+#h{
+
+font-size: 2.2em;
+
+}
+
+#i{
+
+font-size: 1.1em;
+
+}
+
+#j{
+
+font-size: 1.9em;
+
+}
+
+#k{
+
+font-size: 1.4em;
+
+}
+
+#l{
+
+font-size: 2em;
+
+}
+
+#m{
+
+font-size: 1.8em;
+
+}
+
+#n{
+
+font-size: 1.6em;
+
+}
+
+#o{
+
+font-size: 1.4em;
+
+}
+
+#p{
+
+font-size: 1.9em;
+
+}
+
+#q{
+
+font-size: 1.2em;
+
+}
+
+#r{
+
+font-size: 1.4em;
+
+}
+
+p{
+
+width:100%;
+
+/*background-color: #333;*/
+
+}
+
+
+ 
+
+</style> 
+
+</head> 
+
+<body> 
+
+<div id="allWrap">
+
+<!-- 摄像机区域，包裹受相机影响的元素。视情况设置overflow -->
+
+
+<div id="wrap" z_width="800px"> 
+
+<p id="a">Fifty Shades of Grey.</p> 
+
+<p id="b">I Konw You</p>
+
+<p id="c">I believe,I believe there's love in you</p>
+
+<p id="d">Grid locked on the dusty avenues</p>
+
+<p id="e">Inside your heart</p>
+
+<p id="f">Just afraid to go</p>
+
+<p id="g">I am more,I am more than innocent</p>
+
+<p id="h">But just take a chance and let me in</p>
+
+<p id="i">And I'll show you ways</p>
+
+<p id="j">that you don't know</p>
+
+<p id="k">Don't complicate it</p>
+
+<p id="l">Don't let the past dictate</p>
+
+<p id="m">Yeaaah,</p>
+
+<p id="n">I've been patient</p>
+
+<p id="o">But slowly I'm losing faith</p>
+
+<p id="p">So please</p>
+
+<p id="q">I know you baby</p>
+
+<p id="r">I know you baby</p>
+
+</div> 
+
+<!-- 点击开始摄像机事件。 -->
+
+<button id="static">static模式：点击切换至摄像机视角.</button>
+
+&nbsp;&nbsp;默认相机位置在屏幕中央，X:400px,Y:200px，Z:800px
+
+<br />设置相机初始位置：
+
+X：<input type="number" name="x_position" value="0" style="width:60px" />px
+
+&nbsp;
+
+Y：<input type="number" name="y_position" value="0" style="width:60px" />px
+
+&nbsp;
+
+Z：<input type="number" name="z_position" value="0" style="width:60px" disabled="true" />px
+
+<br />
+
+<button id="once">once模式：摄像机单次运动</button>
+
+<br />
+
+相机默认路径是水平平移400px，垂直0px，持续时间5000壕秒。可以在下面修改具体数值情况。
+
+<br />
+
+相机水平位移：<input type="number" name="x_path" value="400" style="width:80px" />px
+
+&nbsp;&nbsp&nbsp&nbsp;
+
+相机垂直位移：<input type="number" name="y_path" value="0" style="width:80px" />px
+
+&nbsp;&nbsp&nbsp&nbsp;
+
+<!-- <span style="color:grey">相机纵深位移：</span><input type="number" name="x_path" required val="0" disabled="disabled" style="width:80px" />px -->
+
+相机纵深位移：<input type="number" name="z_path" value="0" style="width:80px" />px
+
+<br />
+
+相机运动时长:<input type="number" name="time" val="0" style="width:80px" />ms &nbsp;&nbsp;&nbsp;&nbsp;可以通过刷新来停止摄像机动画。
+
+<br />
+
+其他模式<span style="color:red">（注，有Z轴相机运动时以下三种模式非第一次的大小变化都会失效）</span>
+
+<br />
+
+<button id="return">return模式：摄像机单次运动（有返回）</button>
+
+<button id="repeat">repeat模式：摄像机循环运动</button>
+
+<button id="cycle">cycle模式：摄像机循环运动（有返回).</button>  
+
+</div>
+
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js" type="text/javascript"></script> 
+
+<script src="./jquery.js" type="text/javascript"></script> 
+
+<script src="./jquery.camera3D.js" type="text/javascript"></script> 
+
+<script type="text/javascript"> 
+
+//设定xyz的初始值。分别为width和heigh的一半大小。
+$(function(){
+	var x_width=parseInt($("#wrap").css("width"));
+    var y_width=parseInt($("#wrap").css("height"));
+    var z_width=parseInt($("#wrap").attr("z_width"));
+    x_width=x_width/2;
+    y_width=y_width/2;
+    $("input[name='x_position']").attr("value",x_width);
+    $("input[name='y_position']").attr("value",y_width);
+    $("input[name='z_position']").attr("value",z_width);
+});
+
+
+
+$(function(){ 
+
+//设定摄像机影响的对象数组。此demo中所有P标签都是要受到影响的元素
+
+//demo中黑屏层，宽800，高400，纵深800
+
+var obejectArray=[
+
+{
+
+obj:"#a",//obj对应该元素id值
+
+x_position:"720px",//该元素距父元素左侧700px
+
+y_position:"200px",//该元素距父元素上侧300px
+
+z_position:"680px" //该元素距父元素底层500px
+
+},{
+
+obj:"#b",
+
+x_position:"500px",
+
+y_position:"100px",
+
+z_position:"100px"
+
+},{
+
+obj:"#c",
+
+x_position:"600px",
+
+y_position:"300px",
+
+z_position:"300px"
+
+},{
+
+obj:"#d",
+
+x_position:"450px",
+
+y_position:"180px",
+
+z_position:"500px"
+
+},{
+
+obj:"#e",
+
+x_position:"350px",
+
+y_position:"370px",
+
+z_position:"700px"
+
+},{
+
+obj:"#f",
+
+x_position:"500px",
+
+y_position:"240px",
+
+z_position:"500px"
+
+},{
+
+obj:"#g",
+
+x_position:"480px",
+
+y_position:"600px",
+
+z_position:"600px"
+
+},{
+
+obj:"#h",
+
+x_position:"700px",
+
+y_position:"280px",
+
+z_position:"720px"
+
+},{
+
+obj:"#i",
+
+x_position:"600px",
+
+y_position:"350px",
+
+z_position:"0px"
+
+},{
+
+obj:"#j",
+
+x_position:"800px",
+
+y_position:"230px",
+
+z_position:"500px"
+
+},{
+
+obj:"#k",
+
+x_position:"600px",
+
+y_position:"100px",
+
+z_position:"300px"
+
+},{
+
+obj:"#l",
+
+x_position:"650px",
+
+y_position:"180px",
+
+z_position:"550px"
+
+},{
+
+obj:"#m",
+
+x_position:"550px",
+
+y_position:"220px",
+
+z_position:"280px"
+
+},{
+
+obj:"#n",
+
+x_position:"690px",
+
+y_position:"190px",
+
+z_position:"270px"
+
+},{
+
+obj:"#o",
+
+x_position:"370px",
+
+y_position:"270px",
+
+z_position:"330px"
+
+},{
+
+obj:"#p",
+
+x_position:"530px",
+
+y_position:"310px",
+
+z_position:"410px"
+
+},{
+
+obj:"#q",
+
+x_position:"610px",
+
+y_position:"160px",
+
+z_position:"300px"
+
+},{
+
+obj:"#r",
+
+x_position:"560px",
+
+y_position:"250px",
+
+z_position:"100px"
+
+}
+
+
+
+
+
+
+];
+
+
+//获取相机位移值。
+
+var x_path_input;
+
+var x_path_fin;
+
+var y_path_input;
+
+var y_path_fin;
+
+var time_input;
+
+
+// console.log(x_path_fin);
+
+
+
+//按照每个元素的位置，得到摄像机视角下的图像。
+
+//对应static模式
+
+$("#static").bind("click",function(){
+
+x_path_input=$("input[name='x_path']").val()?$("input[name='x_path']").val():400;
+
+x_path_fin=x_path_input+"px";
+
+y_path_input=$("input[name='y_path']").val()?$("input[name='y_path']").val():0;
+
+y_path_fin=y_path_input+"px";
+
+z_path_input=$("input[name='z_path']").val()?$("input[name='z_path']").val():0;
+
+z_path_fin=z_path_input+"px";
+
+time_input=$("input[name='time']").val()?$("input[name='time']").val():5000; 
+
+//摄像机位置输入
+
+x_position_input=$("input[name='x_position']").val()?$("input[name='x_position']").val():400;
+
+x_position_fin=x_position_input+"px";
+
+y_position_input=$("input[name='y_position']").val()?$("input[name='y_position']").val():200;
+
+y_position_fin=y_position_input+"px";
+
+z_position_input=$("input[name='z_position']").val()?$("input[name='z_position']").val():800;
+
+z_position_fin=x_position_input+"px";
+
+$("#wrap").camera3D(obejectArray, 
+
+{
+
+mode:"static",	//相机的运动模式
+
+x_position:x_position_fin,	//相机初始位置（非有效）
+
+y_position:y_position_fin,	//相机初始位置（非有效）
+
+z_position:z_position_fin, //相机初始位置（非有效）
+
+x_path:x_path_fin, //相机运动的X分量
+
+y_path:y_path_fin, //相机运动的Y分量
+
+z_path:z_path_fin, //相机运动的Z分量（非有效）
+
+time:time_input //相机运动的时间 
+
+}
+
+,function(){
+
+console.log("callBack Success!");
+
+} 
+
+); 
+
+}); 
+
+
+//摄像机沿路径运动一次 ;
+
+//对应once模式
+
+$("#once").bind("click",function(){ 
+
+x_path_input=$("input[name='x_path']").val()?$("input[name='x_path']").val():400;
+
+x_path_fin=x_path_input+"px";
+
+y_path_input=$("input[name='y_path']").val()?$("input[name='y_path']").val():0;
+
+y_path_fin=y_path_input+"px";
+
+z_path_input=$("input[name='z_path']").val()?$("input[name='z_path']").val():0;
+
+z_path_fin=z_path_input+"px";
+
+time_input=$("input[name='time']").val()?$("input[name='time']").val():5000; 
+
+//摄像机位置输入
+
+x_position_input=$("input[name='x_position']").val()?$("input[name='x_position']").val():400;
+
+x_position_fin=x_position_input+"px";
+
+y_position_input=$("input[name='y_position']").val()?$("input[name='y_position']").val():200;
+
+y_position_fin=y_position_input+"px";
+
+z_position_input=$("input[name='z_position']").val()?$("input[name='z_position']").val():800;
+
+z_position_fin=x_position_input+"px";
+
+$("#wrap").camera3D(obejectArray, 
+
+{
+
+mode:"once",	//相机的运动模式
+
+x_position:x_position_fin,	//相机初始位置（非有效）
+
+y_position:y_position_fin,	//相机初始位置（非有效）
+
+z_position:z_position_fin, //相机初始位置（非有效）
+
+x_path:x_path_fin, //相机运动的X分量
+
+y_path:y_path_fin, //相机运动的Y分量
+
+z_path:z_path_fin, //相机运动的Z分量（非有效）
+
+time:time_input //相机运动的时间 
+
+}
+
+,function(){
+
+console.log("callBack Success!");
+
+} 
+
+); 
+
+}); 
+
+
+//摄像机沿路径运动一次，然后返回;
+
+//对应return模式
+
+$("#return").bind("click",function(){ 
+
+x_path_input=$("input[name='x_path']").val()?$("input[name='x_path']").val():400;
+
+x_path_fin=x_path_input+"px";
+
+y_path_input=$("input[name='y_path']").val()?$("input[name='y_path']").val():0;
+
+y_path_fin=y_path_input+"px";
+
+z_path_input=$("input[name='z_path']").val()?$("input[name='z_path']").val():0;
+
+z_path_fin=z_path_input+"px";
+
+time_input=$("input[name='time']").val()?$("input[name='time']").val():5000; 
+
+//摄像机位置输入
+
+x_position_input=$("input[name='x_position']").val()?$("input[name='x_position']").val():400;
+
+x_position_fin=x_position_input+"px";
+
+y_position_input=$("input[name='y_position']").val()?$("input[name='y_position']").val():200;
+
+y_position_fin=y_position_input+"px";
+
+z_position_input=$("input[name='z_position']").val()?$("input[name='z_position']").val():800;
+
+z_position_fin=x_position_input+"px";
+
+$("#wrap").camera3D(obejectArray, 
+
+{
+
+mode:"return",	//相机的运动模式
+
+x_position:x_position_fin,	//相机初始位置（非有效）
+
+y_position:y_position_fin,	//相机初始位置（非有效）
+
+z_position:z_position_fin, //相机初始位置（非有效）
+
+x_path:x_path_fin, //相机运动的X分量
+
+y_path:y_path_fin, //相机运动的Y分量
+
+z_path:z_path_fin, //相机运动的Z分量（非有效）
+
+time:time_input //相机运动的时间 
+
+}
+
+,function(){
+
+console.log("callBack Success!");
+
+} 
+
+); 
+
+}); 
+
+
+//摄像机沿路径循环运动，不带返回 ;
+
+//对应repeat模式
+
+$("#repeat").bind("click",function(){ 
+
+x_path_input=$("input[name='x_path']").val()?$("input[name='x_path']").val():400;
+
+x_path_fin=x_path_input+"px";
+
+y_path_input=$("input[name='y_path']").val()?$("input[name='y_path']").val():0;
+
+y_path_fin=y_path_input+"px";
+
+z_path_input=$("input[name='z_path']").val()?$("input[name='z_path']").val():0;
+
+z_path_fin=z_path_input+"px";
+
+time_input=$("input[name='time']").val()?$("input[name='time']").val():5000; 
+
+//摄像机位置输入
+
+x_position_input=$("input[name='x_position']").val()?$("input[name='x_position']").val():400;
+
+x_position_fin=x_position_input+"px";
+
+y_position_input=$("input[name='y_position']").val()?$("input[name='y_position']").val():200;
+
+y_position_fin=y_position_input+"px";
+
+z_position_input=$("input[name='z_position']").val()?$("input[name='z_position']").val():800;
+
+z_position_fin=x_position_input+"px";
+
+$("#wrap").camera3D(obejectArray, 
+
+{
+
+mode:"repeat",	//相机的运动模式
+
+x_position:x_position_fin,	//相机初始位置（非有效）
+
+y_position:y_position_fin,	//相机初始位置（非有效）
+
+z_position:z_position_fin, //相机初始位置（非有效）
+
+x_path:x_path_fin, //相机运动的X分量
+
+y_path:y_path_fin, //相机运动的Y分量
+
+z_path:z_path_fin, //相机运动的Z分量（非有效）
+
+time:time_input //相机运动的时间 
+
+}
+
+,function(){
+
+console.log("callBack Success!");
+
+} 
+
+); 
+
+}); 
+
+
+
+
+//拿这个做Z轴纵深的功能添加
+
+
+//摄像机沿路径循环运动，带返回 ;
+
+//对应cycle模式
+
+$("#cycle").bind("click",function(){ 
+
+x_path_input=$("input[name='x_path']").val()?$("input[name='x_path']").val():400;
+
+x_path_fin=x_path_input+"px";
+
+y_path_input=$("input[name='y_path']").val()?$("input[name='y_path']").val():0;
+
+y_path_fin=y_path_input+"px";
+
+z_path_input=$("input[name='z_path']").val()?$("input[name='z_path']").val():0;
+
+z_path_fin=z_path_input+"px";
+
+time_input=$("input[name='time']").val()?$("input[name='time']").val():5000; 
+
+//摄像机位置输入
+
+x_position_input=$("input[name='x_position']").val()?$("input[name='x_position']").val():400;
+
+x_position_fin=x_position_input+"px";
+
+y_position_input=$("input[name='y_position']").val()?$("input[name='y_position']").val():200;
+
+y_position_fin=y_position_input+"px";
+
+z_position_input=$("input[name='z_position']").val()?$("input[name='z_position']").val():800;
+
+z_position_fin=x_position_input+"px";
+
+$("#wrap").camera3D(obejectArray, 
+
+{
+
+mode:"cycle",	//相机的运动模式
+
+x_position:x_position_fin,	//相机初始位置（非有效）
+
+y_position:y_position_fin,	//相机初始位置（非有效）
+
+z_position:z_position_fin, //相机初始位置（非有效）
+
+x_path:x_path_fin, //相机运动的X分量
+
+y_path:y_path_fin, //相机运动的Y分量
+
+z_path:z_path_fin, //相机运动的Z分量（非有效）
+
+time:time_input //相机运动的时间 
+
+}
+
+,function(){
+
+console.log("callBack Success!");
+
+} 
+
+); 
+
+
+}); 
+
+
+}) 
+
+
+</script> 
+
+</body> 
+
+</html>
